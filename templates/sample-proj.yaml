@@ -1,0 +1,77 @@
+# Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
+# This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
+
+kind: List
+apiVersion: v1
+metadata:
+  name: sample-proj
+items:
+
+- kind: DeploymentConfig
+  apiVersion:  apps.openshift.io/v1
+  metadata:
+    name: sample-proj
+    {{- include "determine_namespace" . | indent 4}}
+    labels:
+      app: sample-proj
+      name: sample-proj
+  spec:
+    replicas: 1
+    selector:
+      app: sample-proj
+      deploymentconfig: sample-proj
+    triggers:
+      - type: ConfigChange
+    template:
+      metadata:
+        labels:
+          app: sample-proj
+          deploymentconfig: sample-proj
+      spec:
+        containers:
+        - image: docker-registry.default.svc:5000/kottoson-images/sample-proj:{{ .Values.image_shas.sdp_website }}
+          name: sample-proj
+          volumeMounts:
+              - mountPath: /var/cache/nginx
+                name: nginx-cache
+        ports:
+        - name: web
+          protocol: TCP
+          port: 8080
+          targetPort: 8080
+          nodePort: 0
+        volumes:
+        - name: nginx-cache
+          emptyDir: {}
+
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: sample-proj
+    {{- include "determine_namespace" . | indent 4}}
+  spec:
+    ports:
+    - name: web
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 0
+    selector:
+      app: sample-proj
+    type: ClusterIP
+    sessionAffinity: None
+
+- kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: sample-proj
+    {{- include "determine_namespace" . | indent 4}}
+  spec:
+    host: sample-proj-{{.Release.Name}}.apps.ocp-dev.microcaas.net
+    port:
+      targetPort: web
+    to:
+      kind: Service
+      name: sample-proj
+      weight: 100
+    wildcardPolicy: None
