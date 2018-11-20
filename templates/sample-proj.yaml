@@ -29,7 +29,7 @@ items:
           deploymentconfig: sample-proj
       spec:
         containers:
-        - image: docker-registry.default.svc:5000/kottoson-images/sample-proj:{{ .Values.image_shas.sdp_website }}
+        - image: docker-registry.default.svc:5000/kottoson-images/sample-proj:{{ .Values.image_shas.sample_proj }}
           name: sample-proj
           volumeMounts:
               - mountPath: /var/cache/nginx
