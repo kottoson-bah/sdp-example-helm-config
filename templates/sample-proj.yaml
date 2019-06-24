@@ -4,33 +4,33 @@
 kind: List
 apiVersion: v1
 metadata:
-  name: sample-proj
+  name: sdp-example-proj
 items:
 
 - kind: DeploymentConfig
   apiVersion:  apps.openshift.io/v1
   metadata:
-    name: sample-proj
+    name: sdp-example-proj
     {{- include "determine_namespace" . | indent 4}}
     labels:
-      app: sample-proj
-      name: sample-proj
+      app: sdp-example-proj
+      name: sdp-example-proj
   spec:
     replicas: 1
     selector:
-      app: sample-proj
-      deploymentconfig: sample-proj
+      app: sdp-example-proj
+      deploymentconfig: sdp-example-proj
     triggers:
       - type: ConfigChange
     template:
       metadata:
         labels:
-          app: sample-proj
-          deploymentconfig: sample-proj
+          app: sdp-example-proj
+          deploymentconfig: sdp-example-proj
       spec:
         containers:
-        - image: docker-registry.default.svc:5000/kottoson-images/sample-proj:{{ .Values.image_shas.sample_proj }}
-          name: sample-proj
+        - image: docker-registry.default.svc:5000/kottoson-images/sdp-example-proj:{{ .Values.image_shas.sdp_example_proj }}
+          name: sdp_example_proj
           volumeMounts:
               - mountPath: /var/cache/nginx
                 name: nginx-cache
@@ -55,7 +55,6 @@ items:
       protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 0
     selector:
       app: sample-proj
     type: ClusterIP
