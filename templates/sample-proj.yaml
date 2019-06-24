@@ -30,7 +30,7 @@ items:
       spec:
         containers:
         - image: docker-registry.default.svc:5000/kottoson-images/sdp-example-proj:{{ .Values.image_shas.sdp_example_proj }}
-          name: sdp_example_proj
+          name: sdp-example-proj
           volumeMounts:
               - mountPath: /var/cache/nginx
                 name: nginx-cache
