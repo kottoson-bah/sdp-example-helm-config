@@ -47,7 +47,7 @@ items:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: sample-proj
+    name: sdp-example-proj
     {{- include "determine_namespace" . | indent 4}}
   spec:
     ports:
@@ -56,21 +56,21 @@ items:
       port: 8080
       targetPort: 8080
     selector:
-      app: sample-proj
+      app: sdp-example-proj
     type: ClusterIP
     sessionAffinity: None
 
 - kind: Route
   apiVersion: route.openshift.io/v1
   metadata:
-    name: sample-proj
+    name: sdp-example-proj
     {{- include "determine_namespace" . | indent 4}}
   spec:
-    host: sample-proj-{{.Release.Name}}.apps.ocp-dev.microcaas.net
+    host: sdp-example-proj-{{.Release.Name}}.apps.ocp-dev.microcaas.net
     port:
       targetPort: web
     to:
       kind: Service
-      name: sample-proj
+      name: sdp-example-proj
       weight: 100
     wildcardPolicy: None
