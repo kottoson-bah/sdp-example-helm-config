@@ -29,7 +29,7 @@ items:
           deploymentconfig: sdp-example-proj
       spec:
         containers:
-        - image: docker-registry.default.svc:5000/keegan-test-images/sdp-example-proj:{{ .Values.image_shas.sdp_example_proj }}
+        - image: docker-registry.default.svc:5000/sample-app/sdp-example-proj:{{ .Values.image_shas.sdp_example_proj }}
           name: sdp-example-proj
           volumeMounts:
               - mountPath: /var/cache/nginx
@@ -66,7 +66,7 @@ items:
     name: sdp-example-proj
     {{- include "determine_namespace" . | indent 4}}
   spec:
-    host: sdp-example-proj-{{.Release.Name}}.apps.ocp-dev.microcaas.net
+    host: sdp-example-proj-{{.Release.Name}}.apps.okd.kottoson.net
     port:
       targetPort: web
     to:
