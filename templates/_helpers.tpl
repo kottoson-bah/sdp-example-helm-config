@@ -9,3 +9,13 @@ namespace: {{ .Release.Name }}
 namespace: {{ .Values.namespace }}
 {{- end }}
 {{- end }}
+
+{{/* Determines the image tag to use */}}
+{{- define "determine_image_tag" }}
+{{- $reponame := .Values.reponame -}}
+{{- range .Values.global.repos }}
+{{- if eq .name $reponame }}
+{{- .sha }}
+{{- end }}
+{{- end }}
+{{- end }}
