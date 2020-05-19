@@ -1,8 +1,7 @@
 global:
   repos:
-    - name: sdp_example_proj
+    - name: sdp-example-proj
       sha: b762008f1e3e13595e60eab6b82cfd0b132b69dd
     - name: "foo"
       sha: "bar"
 namespace: sample-app-dev
-reponame: "sdp_example_proj"

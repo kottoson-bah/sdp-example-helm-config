@@ -12,8 +12,8 @@ namespace: {{ .Values.namespace }}
 
 {{/* Determines the image tag to use */}}
 {{- define "determine_image_tag" }}
-{{- $reponame := .Values.reponame -}}
-{{- range .Values.global.repos }}
+{{- $reponame := .RepoName -}}
+{{- range .Repos }}
 {{- if eq .name $reponame }}
 {{- .sha }}
 {{- end }}
