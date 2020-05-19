@@ -29,7 +29,7 @@ items:
           deploymentconfig: sdp-example-proj
       spec:
         containers:
-        - image: "docker-registry.default.svc:5000/sample-app/sdp-example-proj:{{- include "determine_image_tag" .}}"
+        - image: "docker-registry.default.svc:5000/sample-app/sdp-example-proj:{{- include "determine_image_tag" (dict "root" .Values "repoName" "sdp_example_proj") }}"
           name: sdp-example-proj
           volumeMounts:
               - mountPath: /var/cache/nginx
